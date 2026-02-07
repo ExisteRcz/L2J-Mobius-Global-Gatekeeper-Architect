@@ -1,35 +1,21 @@
 # L2J Mobius Global Gatekeeper Architect
 
-Profesionální nástroj pro vývojáře **L2J Mobius (Interlude)**.
+Tento nástroj je specializovaný editor pro tvorbu Global Gatekeepera pro projekt [L2J Mobius](https://gitlab.com/MobiusDevelopment/L2J_Mobius).
 
-## ⚠️ Proč vidím jen modrou obrazovku?
-Pokud otevřeš `index.html` přímo z disku (dvojklikem), prohlížeč zablokuje důležité funkce. Pro správný chod musí aplikace běžet na serveru (online nebo lokálním).
+## Struktura projektu
+Aplikace je navržena jako monolit pro maximální jednoduchost:
+- `index.html`: Základní kostra a konfigurace modulů.
+- `index.tsx`: Veškerá logika, UI komponenty a propojení s Gemini AI.
+- `metadata.json`: Informace o aplikaci.
+- `manifest.json`: Web manifest pro možnost instalace jako PWA.
 
-## 🚀 Jak z toho udělat PC aplikaci (bez instalace serveru)
-Nejjednodušší cesta, jak mít "ikonu na ploše" bez instalace web serveru:
+## Hlavní funkce
+1. **Editor**: Vizuální správa kategorií a teleportů.
+2. **Preview**: Reálná simulace Lineage 2 dialogu.
+3. **AI Code Generator**: Automatické generování XML a HTML kódu pro Mobius server pomocí Google Gemini.
 
-1. **Nahraj projekt na GitHub**:
-   - Vytvoř repozitář na svém GitHubu.
-   - Nahraj tam všechny soubory.
-2. **Zapni GitHub Pages**:
-   - Jdi do `Settings` -> `Pages`.
-   - V sekci "Build and deployment" zvol branch `main` a složku `/(root)`.
-   - Klikni na `Save`.
-3. **Instalace do PC**:
-   - Počkej cca 1 minutu, až ti GitHub vygeneruje adresu (např. `https://tvoje-jmeno.github.io/tvuj-repo/`).
-   - Otevři tuto adresu v Chrome nebo Edge.
-   - V adresním řádku vpravo uvidíš ikonu monitoru se šipkou (**Instalovat aplikaci**).
-   - Klikni na ni. Aplikace se ti přidá do Startu a na plochu jako běžný program.
-
-## ✨ Funkce
-- **Vizuální Editor**: Navrhuj teleporty bez psaní kódu.
-- **In-Game Simulace**: Vyzkoušej si, jak bude dialog vypadat ve hře.
-- **AI Generátor**: Gemini API ti vytvoří XML a HTML soubory přímo pro Mobius.
-- **Auto-Save**: Vše se ukládá do paměti prohlížeče, o nic nepřijdeš.
-
-## 🛠 Vývojářské instrukce
-Pokud chceš aplikaci upravovat lokálně a vidět změny, doporučuji použít rozšíření **"Live Server"** ve VS Code, nebo v terminálu spustit:
-`npx serve .` (pokud máš Node.js) nebo `python -m http.server` (pokud máš Python).
+## Instalace a běh
+Aplikace nevyžaduje žádnou instalaci. Stačí otevřít `index.html` v libovolném moderním prohlížeči. Pro generování kódu je vyžadován přístup k internetu (API volání).
 
 ---
-*Vytvořeno jako součást vývojářského toolsetu pro L2J Mobius.*
+*Vytvořeno pro komunitu L2J Mobius Development.*
