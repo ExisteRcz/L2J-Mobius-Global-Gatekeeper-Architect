@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L2J Global Gatekeeper Architect</title>
+    <meta name="theme-color" content="#0f172a">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; margin: 0; }
+        #local-file-warning {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #0f172a;
+            z-index: 9999;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .warning-card {
+            background: #1e293b;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            border: 1px border #334155;
+            max-width: 500px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.40.0",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- Varování při otevření přes file:// -->
+    <div id="local-file-warning" style="display: none;">
+        <div class="warning-card">
+            <div class="text-amber-500 mb-4">
+                <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+            </div>
+            <h2 class="text-2xl font-bold mb-4">Aplikace nelze spustit z disku</h2>
+            <p className="text-slate-400 mb-6 text-sm">
+                Prohlížeče z bezpečnostních důvodů blokují spouštění moderních aplikací přímo ze souboru (<code>file://</code>).
+            </p>
+            <div class="bg-slate-900/50 p-4 rounded-lg text-left mb-6 text-xs font-mono text-slate-300">
+                <p class="font-bold text-blue-400 mb-2">Jak to opravit?</p>
+                <ol class="list-decimal ml-4 space-y-2">
+                    <li>Pushni kód na svůj <b>GitHub</b>.</li>
+                    <li>V Nastavení (Settings) zapni <b>GitHub Pages</b>.</li>
+                    <li>Otevři vygenerovanou URL a klikni na <b>"Instalovat"</b>.</li>
+                </ol>
+            </div>
+            <p class="text-xs text-slate-500 italic">Více informací najdeš v README.md</p>
+        </div>
+    </div>
+
+    <script>
+        // Detekce file protokolu
+        if (window.location.protocol === 'file:') {
+            document.getElementById('local-file-warning').style.display = 'flex';
+            document.getElementById('root').style.display = 'none';
+        }
+
+        // Registrace Service Workeru
+        if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration failed:', err));
+            });
+        }
+    </script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
